@@ -9,7 +9,7 @@
 function flash_rwlegacy()
 {
     #set working dir
-    cd /tmp || { exit_red "Error changing to tmp dir; cannot proceed"; return 1; }
+    cd /tmp || { exit_red "Error al cambiar al directorio temporal; no se puede continuar"; return 1; }
 
     # set dev mode legacy boot / AltFw flags
     if [ "${isChromeOS}" = true ]; then

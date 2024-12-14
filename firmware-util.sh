@@ -14,26 +14,26 @@
 #path to directory where script is saved
 script_dir="$(dirname $(readlink -f $0))"
 
-#where the stuff is
-script_url="https://raw.githubusercontent.com/MrChromebox/scripts/main/"
+#donde estan las cosas
+script_url="https://raw.githubusercontent.com/freedarwuin/scripts/main/"
 
-#ensure output of system tools in en-us for parsing
+#Garantizar la salida de las herramientas del sistema en en-us para su análisis
 export LC_ALL=C
 
-#set working dir
+#establecer directorio de trabajo
 if grep -q "Chrom" /etc/lsb-release ; then
-    # needed for ChromeOS/ChromiumOS v82+
+    # necesario para Chrome OS/Chromium OS v82+
     mkdir -p /usr/local/bin
     cd /usr/local/bin
 else
     cd /tmp
 fi
 
-# clear screen / show banner
+# Limpiar pantalla / mostrar banner
 printf "\ec"
-echo -e "\nMrChromebox Firmware Utility Script starting up"
+echo -e "\nScript de utilidad de firmware freedarwuin al iniciarse"
 
-#check for cmd line param, expired CrOS certs
+#verificar parámetros de línea de comando, certificados CrossS expirados
 if ! curl -sLo /dev/null https://mrchromebox.tech/index.html || [[ "$1" = "-k" ]]; then
     export CURL="curl -k"
 else
@@ -43,8 +43,8 @@ fi
 if [ ! -d "$script_dir/.git" ]; then
     script_dir="."
 
-    #get support scripts
-    echo -e "\nDownloading supporting files..."
+    #Obtener scripts de soporte
+    echo -e "\nDescargando archivos de soporte..."
     rm -rf firmware.sh >/dev/null 2>&1
     rm -rf functions.sh >/dev/null 2>&1
     rm -rf sources.sh >/dev/null 2>&1
@@ -55,7 +55,7 @@ if [ ! -d "$script_dir/.git" ]; then
     $CURL -sLO ${script_url}sources.sh
     rc2=$?
     if [[ $rc0 -ne 0 || $rc1 -ne 0 || $rc2 -ne 0 ]]; then
-        echo -e "Error downloading one or more required files; cannot continue"
+        echo -e "Error al descargar uno o más archivos necesarios; no se puede continuar"
         exit 1
     fi
 fi
@@ -64,22 +64,22 @@ source $script_dir/sources.sh
 source $script_dir/firmware.sh
 source $script_dir/functions.sh
 
-#set working dir
+#establecer directorio de trabajo
 cd /tmp
 
-#do setup stuff
+#hacer cosas de configuración
 prelim_setup
 prelim_setup_result="$?"
 
-#saving setup state for troubleshooting
+#Guardar el estado de configuración para solucionar problemas
 diagnostic_report_save
 troubleshooting_msg=(
-    " * diagnosics report has been saved to /tmp/mrchromebox_diag.txt"
-    " * go to https://forum.chrultrabook.com/ for help"
+    " * El informe de diagnóstico se ha guardado en /tmp/mrchromebox_diag.txt"
+    " * ir a https://forum.chrultrabook.com/ Para ayuda"
 )
 if [ "$prelim_setup_result" -ne 0 ]; then
     IFS=$'\n'
-    echo "MrChromebox Firmware Utility setup was unsuccessful" > /dev/stderr
+    echo "La instalación de la utilidad de firmware de freedarwuin no fue exitosa" > /dev/stderr
     echo "${troubleshooting_msg[*]}" > /dev/stderr
     exit 1
 fi
@@ -90,7 +90,7 @@ trap 'check_unsupported' EXIT
 function check_unsupported() {
     if [ "$isUnsupported" = true ]; then
         IFS=$'\n'
-        echo "MrChromebox Firmware Utility didn't recognize your device" > /dev/stderr
+        echo "La utilidad de firmware de freedarwuin no reconoció su dispositivo" > /dev/stderr
         echo "${troubleshooting_msg[*]}" > /dev/stderr
     fi
 }

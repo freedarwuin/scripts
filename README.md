@@ -1,3 +1,3 @@
-Home of the ChromeOS Firmware Utility script and Kodi E-Z Setup script.
+Página de inicio del script de utilidad de firmware de ChromeOS y del script de configuración fácil de Kodi.
 
-For home info, please visit https://mrchromebox.tech
+Para obtener información sobre la página de inicio, visite https://mrchromebox.tech
